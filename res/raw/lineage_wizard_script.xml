@@ -67,6 +67,12 @@
     <WizardAction
         wizard:uri="intent:#Intent;action=org.lineageos.setupwizard.THEME_SETTINGS;end"
         id="theme_settings">
+        <result wizard:action="nos_icons" />
+    </WizardAction>
+
+    <WizardAction
+        wizard:uri="intent:#Intent;action=org.lineageos.setupwizard.NOS_ICONS;end"
+        id="nos_icons">
         <result wizard:action="finish" />
     </WizardAction>
 

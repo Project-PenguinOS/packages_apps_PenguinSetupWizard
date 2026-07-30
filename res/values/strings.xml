@@ -81,4 +81,9 @@
     <string name="theme_summary">Dark theme uses a black background to help keep battery alive longer on some screens</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
+
+    <string name="setup_nos_icons">Nothing OS icons</string>
+    <string name="nos_icons_description">Give your apps the Nothing OS look with monochrome, dot-style icons on your home screen. You can change this later in Settings.</string>
+    <string name="nos_icons_toggle_label">Enable Nothing OS icons</string>
+
 </resources>
