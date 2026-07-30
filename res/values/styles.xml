@@ -5,9 +5,22 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <style name="Theme.Setup" parent="@style/SudFullDynamicColorThemeGlifV3.DayNight">
+    <style name="Theme.Setup" parent="@style/SudThemeGlifV3.DayNight">
         <item name="sucUsePartnerResource">true</item>
         <item name="sudUsePartnerHeavyTheme">true</item>
+        
+        <item name="colorAccent">@color/lineage_accent</item>
+        <item name="android:colorAccent">@color/lineage_accent</item>
+        <item name="android:colorControlActivated">@color/lineage_accent</item>
+        <item name="android:windowBackground">@drawable/bg_aurora</item>
+        
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        
+        <item name="sucStatusBarBackground">@android:color/transparent</item>
+        
+        <item name="sudButtonCornerRadius">@dimen/penguin_button_corner_radius</item>
     </style>
 
     <style name="SpinnerItem">

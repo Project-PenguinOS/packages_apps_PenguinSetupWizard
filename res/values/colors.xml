@@ -5,10 +5,13 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <color name="lineage_accent">#167C80</color>
+    
+    <color name="lineage_accent">#C8783E</color>
 
     <color name="button_bar_text_enabled">#ff1e1e1e</color>
     <color name="button_bar_text_disabled">#321e1e1e</color>
 
     <color name="divider">#40000000</color>
+
+    <color name="sud_glif_background_color">#00000000</color>
 </resources>

@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.setupcompat.template.FooterButtonStyleUtils;
 import com.google.android.setupcompat.util.SystemBarHelper;
 
 import org.lineageos.setupwizard.util.SetupWizardUtils;
@@ -43,14 +42,10 @@ public class WelcomeActivity extends SubBaseActivity {
                 .setOnClickListener(
                         view -> startSubactivity(new Intent(ACTION_ACCESSIBILITY_SETTINGS)));
 
-        FooterButtonStyleUtils.applyPrimaryButtonPartnerResource(this, startButton, true);
-
         if (SetupWizardUtils.hasTelephony(this)) {
             setSkipText(R.string.emergency_call);
             emergButton.setOnClickListener(
                     view -> startSubactivity(new Intent(ACTION_EMERGENCY_DIAL)));
-
-            FooterButtonStyleUtils.applySecondaryButtonPartnerResource(this, emergButton, true);
         } else {
             emergButton.setVisibility(View.GONE);
         }

@@ -18,13 +18,18 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
@@ -34,10 +39,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.settingslib.Utils;
 
+import com.google.android.setupcompat.template.StatusBarMixin;
 import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.GlifLayout;
 import com.google.android.setupdesign.transition.TransitionHelper;
 import com.google.android.setupdesign.util.ThemeHelper;
+
+import java.util.List;
 
 import org.lineageos.setupwizard.NavigationLayout.NavigationBarListener;
 import org.lineageos.setupwizard.util.SetupWizardUtils;
@@ -47,6 +55,11 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
 
     public static final String TAG = BaseSetupWizardActivity.class.getSimpleName();
     public static final int DEFAULT_TRANSITION = TransitionHelper.TRANSITION_FADE_THROUGH;
+
+    private static final List<String> STEP_ORDER = List.of(
+            "WelcomeActivity", "LocaleActivity", "SimMissingActivity",
+            "NetworkSetupActivity", "DateTimeActivity", "LocationSettingsActivity",
+            "NavigationSettingsActivity", "ThemeSettingsActivity", "IconStyleActivity");
 
     private NavigationLayout mNavigationBar;
 
@@ -304,6 +317,14 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
     private void initLayout() {
         if (getLayoutResId() != -1) {
             setContentView(getLayoutResId());
+            final View glif = findViewById(R.id.setup_wizard_layout);
+            if (glif instanceof GlifLayout) {
+
+                ((GlifLayout) glif).getMixin(StatusBarMixin.class)
+                        .setStatusBarBackground(Color.TRANSPARENT);
+            }
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setNavigationBarColor(Color.TRANSPARENT);
         }
         if (getTitleResId() != -1) {
             final CharSequence headerText = TextUtils.expandTemplate(getText(getTitleResId()));
@@ -315,6 +336,48 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
             icon.setTintList(Utils.getColorAccent(layout.getContext()));
             layout.setIcon(icon);
         }
+        addProgressIndicator();
+    }
+
+    private void addProgressIndicator() {
+        final int index = STEP_ORDER.indexOf(getClass().getSimpleName());
+        if (index < 0) {
+            return;
+        }
+        final View navBar = findViewById(R.id.navigation_bar);
+        if (navBar == null || !(navBar.getParent() instanceof LinearLayout parent)) {
+            return;
+        }
+        final boolean night = (getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        final int accent = getColor(R.color.lineage_accent);
+        final int idle = night ? 0x59FFFFFF : 0x40000000;
+
+        final LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER);
+        row.setPadding(0, dp(16), 0, dp(16));
+
+        final int h = dp(7);
+        for (int i = 0; i < STEP_ORDER.size(); i++) {
+            final View dot = new View(this);
+            final LinearLayout.LayoutParams lp =
+                    new LinearLayout.LayoutParams(i == index ? dp(20) : dp(7), h);
+            lp.setMarginStart(dp(2));
+            lp.setMarginEnd(dp(2));
+            dot.setLayoutParams(lp);
+            final GradientDrawable g = new GradientDrawable();
+            g.setShape(GradientDrawable.RECTANGLE);
+            g.setCornerRadius(h / 2f);
+            g.setColor(i == index ? accent : idle);
+            dot.setBackground(g);
+            row.addView(dot);
+        }
+        parent.addView(row, parent.indexOfChild(navBar));
+    }
+
+    private int dp(int value) {
+        return Math.round(value * getResources().getDisplayMetrics().density);
     }
 
     protected GlifLayout getGlifLayout() {
