@@ -20,7 +20,10 @@ public class UpdateReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
         final boolean shouldShow;
-        if (Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(action)) {
+        if (Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
+
+            shouldShow = SetupWizardUtils.shouldShowWhatsNew(context);
+        } else if (Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(action)) {
 
             shouldShow = SetupWizardUtils.shouldShowWhatsNewLocked(context);
         } else if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
