@@ -3,6 +3,7 @@
      SPDX-FileCopyrightText: The PenguinOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
+
 <com.google.android.setupdesign.GlifLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/setup_wizard_layout"
@@ -29,7 +30,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:id="@+id/nos_icons"
@@ -57,6 +58,60 @@
                             style="@style/SudCheckBox.Multiline" />
 
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/content_margin_left"
+                        android:paddingRight="@dimen/content_margin_right"
+                        android:paddingTop="@dimen/customisation_section_spacing"
+                        android:text="@string/qs_style_label"
+                        android:textColor="?android:attr/colorAccent"
+                        style="@style/SudItemTitle" />
+
+                    <RadioGroup
+                        android:id="@+id/qs_style_radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/radio_qs_style_penguin"
+                            android:text="@string/qs_style_penguin"
+                            style="@style/SudRadioButton" />
+
+                        <RadioButton
+                            android:id="@+id/radio_qs_style_default"
+                            android:text="@string/qs_style_default"
+                            style="@style/SudRadioButton" />
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/content_margin_left"
+                        android:paddingRight="@dimen/content_margin_right"
+                        android:paddingTop="@dimen/customisation_section_spacing"
+                        android:text="@string/qs_layout_label"
+                        android:textColor="?android:attr/colorAccent"
+                        style="@style/SudItemTitle" />
+
+                    <RadioGroup
+                        android:id="@+id/qs_layout_radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/radio_qs_layout_combined"
+                            android:text="@string/qs_layout_combined"
+                            style="@style/SudRadioButton" />
+
+                        <RadioButton
+                            android:id="@+id/radio_qs_layout_split"
+                            android:text="@string/qs_layout_split"
+                            style="@style/SudRadioButton" />
+
+                    </RadioGroup>
 
                 </LinearLayout>
             </ScrollView>
