@@ -92,5 +92,14 @@
     <string name="qs_layout_label">Quick Settings layout</string>
     <string name="qs_layout_combined">Combined</string>
     <string name="qs_layout_split">Split</string>
+    <string name="setup_panel_styles">Panels</string>
+    <string name="panel_styles_description">Pick how the volume panel and power menu look. You can change all of this later in Settings.</string>
+    <string name="volume_panel_style_label">Volume panel style</string>
+    <string name="volume_panel_style_default">Default</string>
+    <string name="volume_panel_style_expandable">Expandable</string>
+    <string name="volume_panel_style_oneui">One UI</string>
+    <string name="power_menu_style_label">Power menu style</string>
+    <string name="power_menu_style_penguin">Penguin</string>
+    <string name="power_menu_style_ios">iOS</string>
 
 </resources>
