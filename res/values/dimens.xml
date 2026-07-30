@@ -23,5 +23,7 @@
     <dimen name="welcome_title_line_height">64dp</dimen>
     <dimen name="welcome_accessibility_text_size">20sp</dimen>
 
+    <dimen name="penguin_window_corner_radius">32dp</dimen>
+
     <dimen name="penguin_button_corner_radius">100dp</dimen>
 </resources>
