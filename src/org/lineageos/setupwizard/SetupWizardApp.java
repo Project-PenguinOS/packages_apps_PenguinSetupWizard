@@ -64,7 +64,12 @@ public class SetupWizardApp extends Application {
         if (LOGV) {
             Log.v(TAG, "onCreate()");
         }
-        sStatusBarManager = SetupWizardUtils.disableStatusBar(this);
+
+        final boolean setupComplete = Settings.Secure.getInt(getContentResolver(),
+                Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
+        if (!setupComplete) {
+            sStatusBarManager = SetupWizardUtils.disableStatusBar(this);
+        }
         mHandler.postDelayed(mRadioTimeoutRunnable, SetupWizardApp.RADIO_READY_TIMEOUT);
         if (SetupWizardUtils.hasGMS(this)) {
             SetupWizardUtils.disableHome(this);

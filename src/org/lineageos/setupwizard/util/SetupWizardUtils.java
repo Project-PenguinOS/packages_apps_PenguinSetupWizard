@@ -33,12 +33,14 @@ import android.content.res.Resources;
 import android.hardware.biometrics.BiometricManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -63,11 +65,21 @@ public class SetupWizardUtils {
     private static final String CONFIG_HIDE_RECOVERY_UPDATE = "config_hideRecoveryUpdate";
     private static final String PROP_BUILD_DATE = "ro.build.date.utc";
 
+    private static final String KEY_LAST_BUILD_FINGERPRINT = "last_build_fingerprint";
+
+    private static final String PREFS_NAME = "SetupWizardPrefs";
+
     private SetupWizardUtils() {
     }
 
     public static SharedPreferences getPrefs(Context context) {
-        return context.getSharedPreferences("SetupWizardPrefs", MODE_PRIVATE);
+        Context storageContext = context.createDeviceProtectedStorageContext();
+
+        UserManager userManager = context.getSystemService(UserManager.class);
+        if (userManager != null && userManager.isUserUnlocked()) {
+            storageContext.moveSharedPreferencesFrom(context, PREFS_NAME);
+        }
+        return storageContext.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
     }
 
     public static boolean hasWifi(Context context) {
@@ -182,6 +194,8 @@ public class SetupWizardUtils {
                     Settings.Secure.TV_USER_SETUP_COMPLETE, 1);
         }
 
+        recordCurrentBuild(context);
+
         handleEnableMetrics(context);
         handleRecoveryUpdate();
         handleNavigationOption();
@@ -291,6 +305,45 @@ public class SetupWizardUtils {
 
     public static long getBuildDateTimestamp() {
         return SystemProperties.getLong(PROP_BUILD_DATE, 0);
+    }
+
+    public static String getLastBuildFingerprint(Context context) {
+        return getPrefs(context).getString(KEY_LAST_BUILD_FINGERPRINT, "");
+    }
+
+    public static void recordCurrentBuild(Context context) {
+        getPrefs(context).edit()
+                .putString(KEY_LAST_BUILD_FINGERPRINT, Build.FINGERPRINT)
+                .apply();
+    }
+
+    public static boolean shouldShowWhatsNew(Context context) {
+        if (!isOwner() || isManagedProfile(context)) {
+            return false;
+        }
+        final boolean setupComplete = Settings.Secure.getInt(context.getContentResolver(),
+                Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
+        if (!setupComplete) {
+            return false;
+        }
+        return baselineIndicatesUpdate(context);
+    }
+
+    public static boolean shouldShowWhatsNewLocked(Context context) {
+        if (!isOwner() || isManagedProfile(context)) {
+            return false;
+        }
+        final String last = getLastBuildFingerprint(context);
+        return !TextUtils.isEmpty(last) && !last.equals(Build.FINGERPRINT);
+    }
+
+    private static boolean baselineIndicatesUpdate(Context context) {
+        final String last = getLastBuildFingerprint(context);
+
+        if (TextUtils.isEmpty(last)) {
+            return true;
+        }
+        return !last.equals(Build.FINGERPRINT);
     }
 
     public static boolean simMissing(Context context) {

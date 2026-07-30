@@ -87,4 +87,13 @@
     <string name="nos_icons_description">Give your apps the Nothing OS look with monochrome, dot-style icons on your home screen. You can change this later in Settings.</string>
     <string name="nos_icons_toggle_label">Enable Nothing OS icons</string>
 
+    <!-- What's new page -->
+    <string name="whats_new_server_url" translatable="false">https://raw.githubusercontent.com/Project-PenguinOS/OTA/main/whatsnew/{device}.json</string>
+    <string name="whats_new_title">What\'s new</string>
+    <string name="whats_new_hello_subtitle">A few things changed in this update. Take a look before you dive in.</string>
+    <string name="whats_new_build_subtitle"><xliff:g id="codename" example="Celerity">%1$s</xliff:g> \u2022 Build <xliff:g id="build" example="20260902">%2$s</xliff:g></string>
+    <string name="whats_new_unavailable">Release highlights aren\'t available right now. Connect to the internet to see what changed.</string>
+    <string name="whats_new_hello_button">See what\'s new</string>
+    <string name="whats_new_enter_button">Get started with <xliff:g id="name" example="PenguinOS">%1$s</xliff:g></string>
+
 </resources>
