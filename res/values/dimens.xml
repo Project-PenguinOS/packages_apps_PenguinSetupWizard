@@ -12,6 +12,8 @@
     <dimen name="location_text_margin_left">10dp</dimen>
     <dimen name="location_text_margin_right">30dp</dimen>
     <dimen name="base_margin_top">0dp</dimen>
+    
+    <dimen name="customisation_section_spacing">24dp</dimen>
 
     <dimen name="welcome_content_container_padding_bottom">30dp</dimen>
     <dimen name="welcome_content_container_padding_end">24dp</dimen>
