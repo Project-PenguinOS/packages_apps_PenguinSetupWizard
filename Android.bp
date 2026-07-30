@@ -1,10 +1,11 @@
 //
 // SPDX-FileCopyrightText: The LineageOS Project
+
 // SPDX-License-Identifier: Apache-2.0
 //
 
 android_app {
-    name: "LineageSetupWizard",
+    name: "PenguinSetupWizard",
 
     srcs: ["src/**/*.java"],
 
@@ -14,7 +15,10 @@ android_app {
     system_ext_specific: true,
     platform_apis: true,
 
-    overrides: ["Provision"],
+    overrides: [
+        "Provision",
+        "SetupWizard",
+    ],
 
     optimize: {
         proguard_flags_files: ["proguard.flags"],
@@ -26,7 +30,6 @@ android_app {
         "setupcompat",
         "setupdesign",
         "SystemUISharedLib",
-        "org.lineageos.platform.internal",
     ],
 
     libs: ["telephony-common"],

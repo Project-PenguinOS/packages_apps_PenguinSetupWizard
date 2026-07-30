@@ -15,9 +15,7 @@ import static android.telephony.TelephonyManager.PHONE_TYPE_GSM;
 
 import static com.google.android.setupcompat.util.ResultCodes.RESULT_SKIP;
 
-import static org.lineageos.setupwizard.SetupWizardApp.DISABLE_NAV_KEYS;
 import static org.lineageos.setupwizard.SetupWizardApp.ENABLE_RECOVERY_UPDATE;
-import static org.lineageos.setupwizard.SetupWizardApp.KEY_SEND_METRICS;
 import static org.lineageos.setupwizard.SetupWizardApp.LOGV;
 import static org.lineageos.setupwizard.SetupWizardApp.NAVIGATION_OPTION_KEY;
 import static org.lineageos.setupwizard.SetupWizardApp.UPDATE_RECOVERY_PROP;
@@ -45,9 +43,6 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-
-import lineageos.hardware.LineageHardwareManager;
-import lineageos.providers.LineageSettings;
 
 import org.lineageos.setupwizard.BaseSetupWizardActivity;
 import org.lineageos.setupwizard.SetupWizardApp;
@@ -188,7 +183,6 @@ public class SetupWizardUtils {
         }
 
         handleEnableMetrics(context);
-        handleNavKeys(context);
         handleRecoveryUpdate();
         handleNavigationOption();
         WallpaperManager.getInstance(context).forgetLoadedWallpaper();
@@ -268,21 +262,7 @@ public class SetupWizardUtils {
     }
 
     private static void handleEnableMetrics(Context context) {
-        Bundle privacyData = SetupWizardApp.getSettingsBundle();
-        if (privacyData != null
-                && privacyData.containsKey(KEY_SEND_METRICS)) {
-            LineageSettings.Secure.putInt(context.getContentResolver(),
-                    LineageSettings.Secure.STATS_COLLECTION,
-                    privacyData.getBoolean(KEY_SEND_METRICS)
-                            ? 1 : 0);
-        }
-    }
-
-    private static void handleNavKeys(Context context) {
-        if (SetupWizardApp.getSettingsBundle().containsKey(DISABLE_NAV_KEYS)) {
-            writeDisableNavkeysOption(context,
-                    SetupWizardApp.getSettingsBundle().getBoolean(DISABLE_NAV_KEYS));
-        }
+        
     }
 
     private static void handleRecoveryUpdate() {
@@ -306,20 +286,6 @@ public class SetupWizardUtils {
                         UserHandle.USER_CURRENT);
             } catch (Exception ignored) {
             }
-        }
-    }
-
-    private static void writeDisableNavkeysOption(Context context, boolean enabled) {
-        final boolean virtualKeysEnabled = LineageSettings.System.getIntForUser(
-                context.getContentResolver(), LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
-                UserHandle.USER_CURRENT) != 0;
-        if (enabled != virtualKeysEnabled) {
-            LineageSettings.System.putIntForUser(context.getContentResolver(),
-                    LineageSettings.System.FORCE_SHOW_NAVBAR, enabled ? 1 : 0,
-                    UserHandle.USER_CURRENT);
-
-            final LineageHardwareManager hardware = LineageHardwareManager.getInstance(context);
-            hardware.set(LineageHardwareManager.FEATURE_KEY_DISABLE, enabled);
         }
     }
 
