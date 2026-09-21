@@ -25,6 +25,10 @@ public class SetupWizardApp extends Application {
 
     public static final String ACTION_RESTORE_FROM_BACKUP =
             "com.stevesoltys.seedvault.RESTORE_BACKUP";
+    public static final String ACTION_GOOGLE_RESTORE =
+            "com.google.android.apps.restore.ACTION_FLOW_CHOICE";
+    public static final String ACTION_GOOGLE_CLOUD_RESTORE =
+            "com.google.android.apps.restore.ACTION_CLOUD_RESTORE_FLOW";
     public static final String ACTION_EMERGENCY_DIAL = "com.android.phone.EmergencyDialer.DIAL";
     public static final String ACTION_LOAD = "com.android.wizard.LOAD";
 

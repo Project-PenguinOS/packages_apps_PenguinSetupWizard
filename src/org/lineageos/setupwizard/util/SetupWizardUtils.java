@@ -220,6 +220,31 @@ public class SetupWizardUtils {
                 networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
     }
 
+    public static boolean hasValidatedInternet(Context context) {
+        ConnectivityManager cm = context.getSystemService(ConnectivityManager.class);
+        NetworkCapabilities networkCapabilities = cm.getNetworkCapabilities(cm.getActiveNetwork());
+        return networkCapabilities != null &&
+                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+    }
+
+    public static void enableMobileData(Context context) {
+        if (!hasTelephony(context)) {
+            return;
+        }
+        int subId = SubscriptionManager.getDefaultDataSubscriptionId();
+        if (!SubscriptionManager.isValidSubscriptionId(subId)) {
+            return;
+        }
+        TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class)
+                .createForSubscriptionId(subId);
+        if (!telephonyManager.isDataEnabledForReason(
+                TelephonyManager.DATA_ENABLED_REASON_USER)) {
+            telephonyManager.setDataEnabledForReason(
+                    TelephonyManager.DATA_ENABLED_REASON_USER, true);
+        }
+    }
+
     public static boolean hasLeanback(Context context) {
         PackageManager packageManager = context.getPackageManager();
         return packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK);
