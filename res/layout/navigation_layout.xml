@@ -6,13 +6,18 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="12dp">
 
     <Button
         android:id="@+id/navbar_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:minHeight="56dp"
+        android:paddingHorizontal="16dp"
         android:text="@string/skip"
         android:visibility="gone"
         style="@style/SudGlifButton.Secondary" />
