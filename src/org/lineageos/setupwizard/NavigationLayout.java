@@ -40,7 +40,10 @@ public class NavigationLayout extends RelativeLayout {
         FooterButtonStyleUtils.applyPrimaryButtonPartnerResource(context, mNextButton, true);
         FooterButtonStyleUtils.applySecondaryButtonPartnerResource(context, mSkipButton, true);
         applyButtonRadius(mNextButton);
-        applyButtonRadius(mSkipButton);
+        // After the partner styling, which gives Skip the accent as its text: on the wizard's
+        // orange gradient that could hardly be seen.
+        mSkipButton.setBackgroundResource(R.drawable.bg_pill_secondary);
+        mSkipButton.setTextColor(context.getColor(android.R.color.white));
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.NavigationLayout, 0, 0);

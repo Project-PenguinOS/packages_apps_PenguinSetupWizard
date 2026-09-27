@@ -1,0 +1,15 @@
+<!--
+     SPDX-FileCopyrightText: The PenguinOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Skip, as glass beside the Next pill: the accent it had disappeared into the orange end of the
+     wizard's gradient. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:attr/colorControlHighlight">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#33FFFFFF" />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+</ripple>
